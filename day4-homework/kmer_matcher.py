@@ -47,6 +47,3 @@ for key in kmers_query:
         for key3 in target_name:
             print(str(key3)+'\t'+str((target_name[key3]))+'\t'+
                  (str(query_start))+'\t'+str(kmer))
-            
-if __name__ == "__main__":
-    print("Executed")
