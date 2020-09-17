@@ -95,7 +95,7 @@ InsertionSum query = 712
 5a. Looked at show-coords out.delta to see where insertion was. 
 The insertion takes place between 26789 and 26790 in the reference.
 
-5b. Looked at out.report, which showed how long the insertion in reference was.
+5b. Looked at out.report, which showed how long the insertion in assembly was.
 712 bp
 
 5c. samtools faidx scaffolds.fasta NODE_1_length_234497_cov_20.508040:206999-207710 > secret_message
