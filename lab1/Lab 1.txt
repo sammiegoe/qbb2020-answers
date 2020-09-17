@@ -85,7 +85,7 @@ show-coords out.delta
 
 Length is 207006 in reference, 206998 in query 
 S1 E1 26790-233795
-S2 E2 1-206998
+S2 E2 206998-1
 
 4c. Looked at the out.report file from dnadiff (4a)
 2 insertions in reference, 1 insertion in query 
