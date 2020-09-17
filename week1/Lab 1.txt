@@ -1,0 +1,120 @@
+1a. How long is the reference genome? [Hint: Try samtools faidx]
+Output will have LENGTH - total length of this reference genome, in bases 
+An fai index file is created
+
+samtools faidx ref.fasta 
+233806 bp in length
+
+1b. How many reads are provided and how long are they? Make sure to measure each file separately. [Hint: Try FASTQC]
+fastqc /path/to/reads.fq
+frag180.1.fq has 35178 sequences, 100 bp each 
+frag180.2.fq has 35178 sequences, 100 bp each 
+jump2k.1.fq has 70355 sequences, 50 bp each 
+jump2k.2.fq has 70355 sequences, 50 bp each 
+
+1c. How much coverage do you expect to have? [Hint: a little arithmetic]
+(#sequenced bases)/(genome size)
+30x coverage
+((35178*100)+(70355*50))/233806 = 30
+
+1d. Plot the average quality value across the length of the reads. [Screenshot from FASTQC]
+Pushed screenshots to GitHub
+
+2. Count the 21-mers in the reads data
+jellyfish count -m 21 -C -s 1000000 *.fq
+
+2a. jellyfish histo mer_counts.jf > reads.histo
+grep '50' reads.histo
+1091 kmers appear 50 times 
+
+2b. What are the top 10 most frequently occurring kmers? 
+jellyfish dump mer_counts.jf > mer_counts_dumps.fa
+
+jellyfish dump -L 2 -ct mer_counts.jf | sort -k2,2nr | head > output
+
+GCCCACTAATTAGTGGGCGCC	105
+CCCACTAATTAGTGGGCGCCG	104
+CGCCCACTAATTAGTGGGCGC	104
+ACGGCGCCCACTAATTAGTGG	101
+AACAGGCCAGCTTATAAGCTG	98
+CAGGCCAGCTTATAAGCTGGC	98
+ACAGGCCAGCTTATAAGCTGG	97
+AGGCCAGCTTATAAGCTGGCC	95
+AGCATCGCCCACATGTGGGCG	83
+GCATCGCCCACATGTGGGCGA	82
+
+2c. What is the estimated genome size based on the kmer frequencies? 
+Upload jellyfish histogram to GenomeScope and report the min 'Genome Haploid Length' in the 'Results' section
+
+Genome Haploid Length         233,468 bp
+
+Question 2d. How well does the GenomeScope genome size estimate compare to the reference genome? [Hint: In a sentence or two] 
+The maximum estimated genome size is the same as the actual reference genome size. Therefore, GenomeScope underestimates genome size, since the actual size is on its higher end estimate.
+
+3. Assemble the reads using Spades
+spades.py --pe1-1 frag180.1.fq --pe1-2 frag180.2.fq --mp1-1 jump2k.1.fq --mp1-2 jump2k.2.fq -o asm -t 4 -k 31
+
+3a. How many contigs were produced? 
+grep -c '>' contigs.fasta
+4 contigs
+
+3b. What is the total length of the contigs? 
+234,467
+
+samtools faidx contigs.fasta
+cut -f2 contigs.fasta.fai > contigs.txt 
+paste -sd+ contigs.txt | bc
+234467
+
+3c. What is the size of the largest contig? 
+Using previously made index file:
+sort -k 2 contigs.fasta.fai
+
+NODE_1_length_105831_cov_20.671371	105831
+
+3d. What is the contig N50 size? 
+47861 bp is contig N50 size 
+Used script n50.py to calculate this. 
+
+4a. AvgIdentity                    99.98                99.98
+dnadiff ref.fa scaffolds.fasta
+
+4b. 
+nucmer ../ref.fa scaffolds.fasta
+show-coords out.delta
+
+Length is 207006 in reference, 206998 in query 
+S1 E1 26790-233795
+S2 E2 1-206998
+
+4c. Looked at the out.report file from dnadiff (4a)
+2 insertions in reference, 1 insertion in query 
+InsertionSum reference = 13
+InsertionSum query = 712
+
+5a. Looked at show-coords out.delta to see where insertion was. 
+The insertion takes place between 26789 and 26790 in the reference.
+
+5b. Looked at out.report, which showed how long the insertion in reference was.
+712 bp
+
+5c. samtools faidx scaffolds.fasta NODE_1_length_234497_cov_20.508040:206999-207710 > secret_message
+
+>NODE_1_length_234497_cov_20.508040:206999-207710
+CTAACGATTTACATCGGGAAAGCTTAATGCAATTCACGCAGATATTCAGCTTAGAAGGTA
+CGCAGCGGTGACGGGGTGCGGTCCATAATCTATGAAGCTATGAATTCGTACCTCAAGTAA
+TGTTTTCTTCGCTGCAGTTCAGAAGTGATAAAGGTATCCCGCTTAGCCTGGCATACTTTG
+TGCGTTCGTACCGCCCAGCATTAATGACTTGTGTAGGCAAGTAATGAACGACTCTTCTAC
+GCCGCGCCTAACCTCCGCACATAATGGCAGCATGTGGTAGTTACATACGCACAGAAGTGG
+TTCGGTTTTAACTATAGTCAGATATGAATAAGCTGCGTGTGTCGTTGTGTCGGCGTGTCG
+TACTTACCTCCTGACATAGGTGAATTTCAGCCTACTGTAAGTTTGGAGTCGCGCTCTTTT
+CTTATTATATTCTTTGGTATGTGTGTGATGGGTTCGGGCGTGTATTGATGTCTCTAAGGC
+TCATGTTAGTGTTTATTTGGTCAGTTATGACGGTGTTCCTGTCGTACGTGTTGGCTTAGC
+GGACTTGTAGACGGGATCAAGGTTGTCTGACCCTCCGGTCGACCGTGGGTCGGCCGTCCC
+GGCCAGAATACAAGCCGCTTAGACTTTCGAAAGAGGGTAAGTTACTACGCGCGAACGTTA
+TACCTCGTTTCAGTATGCACTCCCTTAAGTCACTCAGAAAAGACTAAGGGGCTG
+
+5d. python porter_decoder.py --decode --rev_comp --input secret_message
+Congratulations to the 2020 CMDB @ JHU class!  Keep on looking for little green aliens...
+
+
