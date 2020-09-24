@@ -1,0 +1,8 @@
+Step 5
+vcffilter -f "QUAL > 20" var.vcf > results.vcf
+
+Step 6
+vcfallelicprimitives -k -g results.vcf > decomposed.vcf
+
+Step 7: Variant prediction with snpeff ann
+snpeff ann decomposed.vcf > annotated.vcf
