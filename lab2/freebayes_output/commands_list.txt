@@ -5,4 +5,4 @@ Step 6
 vcfallelicprimitives -k -g results.vcf > decomposed.vcf
 
 Step 7: Variant prediction with snpeff ann
-snpeff ann decomposed.vcf > annotated.vcf
+snpeff ann [assembly archive] decomposed.vcf > annotated.vcf
