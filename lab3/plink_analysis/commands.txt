@@ -1,0 +1,34 @@
+Downloaded latest vcf to assign SNP IDs (to make it easier for later)
+Removed "chr" from vcf so that it only said "I", "II", etc. to match the vcf
+
+First had to gzip both files:
+gzip BYxRM_segs_saccer3.bam.simplified.vcf
+gzip saccharomyces_cerevisiae.vcf
+
+Then index both files:
+bcftools index BYxRM_segs_saccer3.bam.simplified.vcf.gz
+bcftools index saccharomyces_cerevisiae.vcf.gz
+
+bcftools annotate -a saccharomyces_cerevisiae.vcf.gz -c ID -o BYxRM_simplified.vcf BYxRM_segs_saccer3.bam.simplified.vcf.gz
+
+Output file with SNP IDs BYxRM_simplified.vcf
+
+1. Principal component analysis
+plink --vcf BYxRM_simplified.vcf --pca --mind --allow-extra-chr
+
+2. Allele frequency spectrum
+plink --vcf BYxRM_simplified.vcf --freq --mind --allow-extra-chr
+
+3. Using plink, perform quantitative association testing for all phenotypes.
+plink --vcf BYxRM_simplified.vcf --pheno phenotypes.txt --all-pheno \
+	--linear --allow-no-sex --allow-extra-chr --covar plink.eigenvec \
+	--covar-number 1-10
+
+4. For each, produce QQ plot and Manhattan plot.
+
+5. Choose one of the traits for which you performed GWAS. For the top associated SNP,
+visualize the effect size by creating a boxplot of the phenotype stratified by genotype.
+plink --vcf BYxRM_simplified --recode A --snp s02-795750 \
+	--out top_SNP --allow-extra-chr
+
+
