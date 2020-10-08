@@ -1,0 +1,11 @@
+Lab 4 commands
+
+1. BLAST search - changed settings as follows:
+	In algorithm parameters, changed max target sequences to 1000, expect threshold to 0.0001, and optimize for somewhat similar sequences (blastn)
+2. Multiple sequence alignment
+	Combine query and alignment nt files: cat week4_query.fa blast_output.txt > query_and_blast.fa
+	transeq query_and_blast.fa query_and_blast.pep 
+		Minimum length 1739
+		Maximum length 3694
+	MAS with MAFFT: mafft query_and_blast.pep > mafft_output_rerun
+3-4. See Jupyter notebook for converting back to nucleotides, statistics, plotting
