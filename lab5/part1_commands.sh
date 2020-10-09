@@ -21,15 +21,29 @@ macs2 callpeak -t CTCF_G1E.bam -c input_G1E.bam --format=BAM --name=CTCF_G1E \
 --gsize=61000000 --tsize=26
 
 # Differential binding
+# Sites lost in ER4 line
 bedtools intersect \
 -a CTCF_G1E_peaks.narrowPeak \
 -b CTCF_ER4_peaks.narrowPeak \
--v -wo > CTCF_siteslost.bed
+-v -wo > CTCF_siteslost.bed # -v reports entries in A that have no overlap in B
 
+# Sites gained in ER4 line, reports entries in A that have no overlap in B
 bedtools intersect \
 -a CTCF_ER4_peaks.narrowPeak \
 -b CTCF_G1E_peaks.narrowPeak \
--v -wo > CTCF_sitesgained
+-v -wo > CTCF_sitesgained.bed
+
+# Sites lost in G1E line
+bedtools intersect \
+-a CTCF_ER4_peaks.narrowPeak \
+-b CTCF_G1E_peaks.narrowPeak \
+-v -wo > G1E_siteslost.bed
+
+# Sites gained in G1E line
+bedtools intersect \
+-a CTCF_G1E_peaks.narrowPeak \
+-b CTCF_ER4_peaks.narrowPeak \
+-v -wo > G1E_sitesgained.bed
 
 # Feature overlapping
 bedtools intersect \
@@ -44,7 +58,10 @@ grep "ER4" overlaps.bed | grep "promoter" | cut -f 8 | paste -sd+ - | bc
 # Getting number of sites lost and gained
 wc CTCF_sitesgained.bed
 wc CTCF_siteslost.bed
+wc G1E_sitesgained.bed
+wc G1E_siteslost.bed
 # Manually wrote to txt file called differential_binding.txt tab-delimited 
+# Sites gained in ER4 is same as sites lost in G1E
 
 
 
