@@ -1,0 +1,9 @@
+The percent overlap with and without sex as a covariate is: 
+
+Without sex as covariate overlap: 
+((# overlapping genes)/(# genes in list without covariate))*100% 
+((3648)/(3790))*100% = 96.25% overlap
+
+With sex as covariate: 
+((# overlapping genes)/(# genes in list with covariate))*100%
+((3648)/(3667))*100% = 99.48% overlap
