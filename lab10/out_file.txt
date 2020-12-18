@@ -1,0 +1,29 @@
+bin.1
+   1 
+   2 Anaerococcus prevotii
+  14 Staphylococcus aureus
+   9 Staphylococcus epidermidis
+  46 Staphylococcus haemolyticus
+bin.2
+ 186 Leuconostoc citreum
+   1 Leuconostoc gelidum
+   5 Leuconostoc kimchii
+   1 Leuconostoc mesenteroides
+   1 Streptococcus thermophilus
+bin.3
+  74 Staphylococcus lugdunensis
+bin.4
+   6 Enterococcus faecalis
+bin.5
+  12 Cutibacterium avidum
+bin.6
+  73 Staphylococcus epidermidis
+bin.7
+  59 Staphylococcus aureus
+   1 Staphylococcus epidermidis
+bin.8
+   1 
+   3 Anaerococcus prevotii
+   1 Clostridium novyi
+   2 Finegoldia magna
+   1 Streptococcus anginosus group
