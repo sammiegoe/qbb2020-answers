@@ -1,0 +1,45 @@
+Questions
+
+1. Briefly comment on the trends you see in the gut microbiota throughout the first week. 
+- For the first sample, the major Enterococcus species is E. faecalis (62%). The major Staphylococcus species is S. epidermidis (17%), but within this genus there are very small populations of S. aureus, S. haemolyticus, S. warneri, and others. The Cutibacterium genus represents about 18% of the root, and the major species is C. avidum (93% of Cutibacterium) followed by C. acnes. There is about 0.5% viral population seen. 
+- In the second sample, there is a less diverse microbiota population. E. faecalis makes up 91% of the root, S. epidermidis 7%, and there is no observable Cutibacterium genus. The viral population decreased to 0.1%.
+- The third, fourth, and fifth samples also show trends similar to the second, with around 83-89% E. faecalis and 9-14% S. epidermidis.
+- In the sixth sample there is a sudden reappearance of the Cutibacterium genus, with C. avidum making up 3% of the gut microbiota. The virus increased to 0.5%. The E. faecalis population decreased from 83% to 76% on this day, while S. epidermidis increased from 14% to 17% of the root. 
+- In the seventh sample, C. avidum stayed the same (3%), but E. faecalis again decreased to 70%. For the Staphylococcus genus, there was a notable rise to 25% of the root. Within this genus, S. aureus species increased drastically to 12% of the root, with S. epidermidis at 11%. 
+- Finally in the eighth sample, E. faecalis again decreased to 60% of the root. The Staphylococcus genus decreased to only 10% of the root: S. epidermidis with 5% and S. aureus down to 4%. The most obvious change in the gut microbiota was that C. avidium increased from 3% to 27%. 
+
+2. What metrics in the contigs can we use to group them together? 
+Sequences from the same organisms have similar DNA composition in terms of frequencies of 2-mers or 4-mers, and this can be used to group together contigs that have similar profiles. Contigs from same organisms can also be assumed to have similar sequencing depth within a sample, allowing them to be grouped together. 
+
+3. 
+	A. How many bins did you get? 6 bins
+	B. Roughly what percentage of the assembly do they represent? 
+	Using wc, I found that the assembly is 38708237 bp, and 13187322 bases were put into bins based on the Metabat output, which represents ~30% of the assembly.
+
+	C. Do you think the sizes of each bin look about right, based on what you know about the size of prokaryotic genomes?
+	Using grep and word count:
+	- bin 1 = 2.75 Mb
+	- bin 2 = 2.3 Mb
+	- bin 3 = 1.68 Mb
+	- bin 4 = 1.25 Mb
+	- bin 5 = 2.5 Mb
+	- bin 6 = 2.9 Mb
+	Most prokaryotic genomes are less than 5 Mb in size, so this seems fairly accurate. 
+	D. How would you estimate how complete and how contaminated each bin is? 
+	To determine completeness, universal single copy genes (SCGs) can be counted, such as ribosomal proteins or other housekeeping genes. Completeness is the number of unique SCGs present within the bin / number of unique SCGs in the list. Contamination can be estimated by looking at how many SCGs are present in multiple copies, since a single bin should represent a single unique genome.
+
+4. 
+	A. What are your predictions for each bin? 
+	-Bin 1: Staphylococcus haemolyticus
+	-Bin 2: Leuconostoc citreum
+	-Bin 3: Staphylococcus lugdunensis
+	-Bin 4: Enterococcus faecalis
+	-Bin 5: Cutibacterium avidum 
+	-Bin 6: Staphylococcus epidermidis
+	-Bin 7: Staphylococcus aureus
+	-Bin 8: Anaerococcus prevotii 
+	B. Propose one method to more robustly infer the taxonomy of a metagenomic bin. 
+	In addition to using kmer frequency and sequencing depth, single copy genes such as 16S rRNA genes can also be used to infer the taxonomy of a metagenomic bin. While the genes that encode for rRNA are highly conserved across all bacteria, the 16S rRNA gene also contains variable regions that are genus- or species-specific, allowing it to be used as a phylogenetic marker gene.
+	
+5. Do results of individual genome abundance and looking at read taxonomy distributions agree with each other? What is different? 
+	Overall, they do agree with each other, but the read taxonomy distributions give more information about more genomes and also give distribution of viral abundance. There are only eight genomic bins for the genome abundance, but the Krona chart shows many more than that. However, the heat map is more useful for visually comparing samples, since all of the data is together, and gives a good time course analysis. These two analyses complement each other well and can be used to gain different information about gut microbiota abundances. 
